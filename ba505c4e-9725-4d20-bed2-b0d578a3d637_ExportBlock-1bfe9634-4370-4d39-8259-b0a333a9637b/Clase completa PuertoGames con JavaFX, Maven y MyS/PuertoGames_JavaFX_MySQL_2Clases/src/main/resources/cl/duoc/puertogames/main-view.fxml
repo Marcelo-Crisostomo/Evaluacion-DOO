@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- Archivo de la vista: dibuja controles; la lógica está en JuegoController. -->
+<VBox spacing="12"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="cl.duoc.puertogames.controller.JuegoController">
+
+    <!-- Deja un margen interior de 20 píxeles en todos los lados. -->
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Título principal de la aplicación. -->
+    <Label text="PuertoGames - Gestión de videojuegos"
+           style="-fx-font-size:20px;-fx-font-weight:bold;"/>
+
+    <!-- Formulario: cada fx:id coincide con el campo del Controller. -->
+    <HBox spacing="10">
+        <ComboBox fx:id="tipo" promptText="Tipo" prefWidth="135"/>
+        <TextField fx:id="codigo" promptText="Código" prefWidth="130"/>
+        <TextField fx:id="nombre" promptText="Nombre" prefWidth="260"/>
+        <TextField fx:id="precio" promptText="Precio base" prefWidth="150"/>
+    </HBox>
+
+    <!-- Cada onAction llama al método con ese nombre en el Controller. -->
+    <HBox spacing="10">
+        <Button text="Guardar" onAction="#guardar"/>
+        <Button text="Eliminar" onAction="#eliminar"/>
+        <Button text="Limpiar" onAction="#limpiar"/>
+    </HBox>
+
+    <!-- La lista muestra cada objeto usando su método toString(). -->
+    <!-- Al hacer clic, #seleccionar copia la fila al formulario. -->
+    <ListView fx:id="lista" onMouseClicked="#seleccionar" VBox.vgrow="ALWAYS"/>
+
+    <!-- Texto que informa los resultados de las operaciones. -->
+    <Label fx:id="mensaje" text="Bienvenido a PuertoGames" wrapText="true"/>
+</VBox>

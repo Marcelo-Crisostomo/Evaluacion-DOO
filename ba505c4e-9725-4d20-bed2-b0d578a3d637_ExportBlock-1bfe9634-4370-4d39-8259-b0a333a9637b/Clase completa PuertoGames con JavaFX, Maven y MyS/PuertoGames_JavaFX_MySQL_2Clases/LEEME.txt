@@ -1,0 +1,61 @@
+PUERTOGAMES - JAVA 21 + JAVAFX + MYSQL (DOS CLASES)
+====================================================
+
+A. REQUISITOS
+1. IntelliJ IDEA, JDK 21, Maven y acceso a Internet la primera vez para descargar dependencias.
+2. XAMPP/Laragon con MySQL o MariaDB, o servidor MySQL instalado aparte.
+3. MySQL escuchando en localhost:3306 (o ajustar Conexion.java).
+
+B. BASE DE DATOS
+1. Iniciar MySQL. Con XAMPP también iniciar Apache para usar phpMyAdmin.
+2. Abrir http://localhost/phpmyadmin o el gestor MySQL que utilices.
+3. Ejecutar TODO el contenido del archivo puertogames.sql.
+4. Revisar en Conexion.java el usuario, la contraseña y el puerto de MySQL.
+   Los valores que trae el proyecto (root sin clave) son solo para entorno local.
+
+C. INTELLIJ IDEA
+1. File > Open y seleccionar la carpeta PuertoGames_JavaFX_MySQL_2Clases.
+2. Abrir Project Structure y elegir el JDK 21 como Project SDK.
+3. Esperar a que IntelliJ cargue el proyecto Maven.
+4. Usar Reload All Maven Projects si aparecen dependencias sin resolver.
+5. En el panel Maven > Plugins > javafx > javafx:run, iniciar la aplicación.
+   Otra opción desde terminal abierta en la carpeta del pom.xml:
+       mvn clean javafx:run
+
+D. PRUEBA FUNCIONAL
+1. REGISTRAR: Tipo FISICO; código PG001; nombre Minecraft; precio 20000.
+   Guardar -> aparece Minecraft con precio final 25000.
+2. REGISTRAR: Tipo DIGITAL; código PG002; nombre Hollow Knight; precio 10000.
+   Guardar -> aparece Hollow Knight con precio final 9000.
+3. EDITAR: hacer clic en Minecraft, cambiar precio base a 25000 y Guardar.
+   Debe mostrar precio final 30000.
+4. ELIMINAR: seleccionar Hollow Knight y pulsar Eliminar.
+5. PERSISTENCIA: cerrar la app, volverla a abrir y verificar que quedan los datos.
+6. En phpMyAdmin, ejecutar: SELECT * FROM puertogames.videojuegos;
+
+E. MAPA DE ARCHIVOS
+src/main/java/cl/duoc/puertogames/App.java                 -> Inicio de JavaFX.
+src/main/java/cl/duoc/puertogames/config/Conexion.java     -> Conexión JDBC.
+src/main/java/cl/duoc/puertogames/model/Videojuego.java    -> Clase padre.
+src/main/java/cl/duoc/puertogames/model/JuegoFisico.java   -> Regla +5000.
+src/main/java/cl/duoc/puertogames/model/JuegoDigital.java  -> Regla -10%.
+src/main/java/cl/duoc/puertogames/dao/VideojuegoMySQLDAO.java -> Operaciones CRUD.
+src/main/java/cl/duoc/puertogames/controller/JuegoController.java -> Eventos.
+src/main/resources/cl/duoc/puertogames/main-view.fxml -> Vista.
+pom.xml                                               -> Dependencias y ejecución.
+puertogames.sql                                       -> Base de datos.
+
+F. ERRORES FRECUENTES
+* Communications link failure: MySQL apagado o puerto distinto.
+* Access denied: cambiar usuario/contraseña en Conexion.java.
+* Unknown database: ejecutar puertogames.sql.
+* Duplicate entry: ya existe un videojuego con el mismo código.
+* Location is not set: verificar la ubicación de main-view.fxml en resources.
+* JavaFX no resuelto: descargar dependencias Maven con Internet y JDK 21.
+
+CLASE 1 (40 min): conexión, SELECT, ListView e INSERT.
+CLASE 2 (40 min): selección, UPDATE, DELETE y prueba de persistencia.
+
+IMPORTANTE: esta versión educativa no incluye interfaz DAO, lambda, Runnable,
+TableView ni excepciones personalizadas para reducir la complejidad.
+Todas las consultas son preparadas con parámetros ?, y el Controller no contiene SQL.

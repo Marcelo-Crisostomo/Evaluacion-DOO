@@ -1,0 +1,23 @@
+# ==========================================================
+#  SOLO DOCENTE: soluciones de la evaluación (NO subir)
+# ==========================================================
+
+# Proyectos resueltos de Vice City Motors (carpetas y ZIP), en cualquier ubicación
+**/ViceCityMotors_Final/
+**/ViceCityMotors_Final_Parte2/
+**/ViceCityMotors_Final*.zip
+
+# Respaldos (contienen copias de las soluciones)
+_respaldo_*/
+
+# Notas del docente (traen el código del profe y la solución de la Parte 2)
+**/LEEME_DOCENTE.txt
+
+# ==========================================================
+#  Archivos generados / del sistema
+# ==========================================================
+.DS_Store
+**/target/
+*.class
+**/.idea/workspace.xml
+**/.idea/shelf/

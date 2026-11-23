@@ -1,0 +1,1416 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Clase completa: PuertoGames con JavaFX, Maven y MySQL</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="4145b3c4-e312-804d-91b5-f6077e39c885" class="page sans"><header><h1 class="page-title" dir="auto">Clase completa: PuertoGames con JavaFX, Maven y MySQL</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><p id="4145b3c4-e312-80fd-bb87-cac36c4df6a7" class="" dir="auto">Tecnologías: Java 21 + IntelliJ IDEA + Maven + JavaFX + FXML + MySQL</p><p id="4145b3c4-e312-80d9-85d7-c1893b1bfcb4" class="" dir="auto">Objetivo: construir una aplicación de escritorio con operaciones CRUD, aplicando MVC, DAO, herencia y polimorfismo.</p><p id="4145b3c4-e312-805e-aef3-ecfb8bfe0db2" class="" dir="auto">Ya preparé el proyecto con los archivos Java comentados, la configuración de Maven, el diseño FXML, el script para crear la base de datos y una guía de ejecución.</p><p id="4145b3c4-e312-80c5-aeb9-f9c642e73cb5" class="" dir="auto">PuertoGames — Proyecto completo</p><p id="4145b3c4-e312-802c-aafc-ec79d0d1473d" class="" dir="auto">ZIP · 11 archivos · JavaFX + MySQL</p><p id="4145b3c4-e312-80a7-aaf0-f00fc7a521dd" class="" dir="auto">Descargar proyecto para IntelliJ</p><p id="4145b3c4-e312-80c5-aefb-f32ceebb26b9" class="" dir="auto">El ZIP incluye el código fuente y la configuración necesaria. Para ejecutarlo debes tener MySQL iniciado y crear la base de datos mediante el script incluido. La compilación de los modelos, la conexión y el DAO se comprobó con Java 21; la ejecución completa de JavaFX con MySQL deberá comprobarse en tu equipo.</p><h2 id="4145b3c4-e312-800d-b216-fcccf16941ee" class="" dir="auto">1. Problemática que resolveremos</h2><p id="4145b3c4-e312-8008-aed2-c2ff53a15a1f" class="" dir="auto">PuertoGames es una tienda que comercializa videojuegos físicos y digitales. Necesita una aplicación que permita registrar, consultar, modificar y eliminar videojuegos, almacenando permanentemente la información en MySQL.</p><p id="4145b3c4-e312-8025-ba99-e9451d70c618" class="" dir="auto">Las reglas de negocio serán:</p><table id="4145b3c4-e312-80af-b7d2-ea54e874e1e4" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="4145b3c4-e312-803b-8435-c9ef1395e1df" dir="ltr"><th id="lSx=" class="simple-table-header-color simple-table-header">Tipo</th><th id="[LL\" class="simple-table-header-color simple-table-header">Precio final</th></tr></thead><tbody><tr id="4145b3c4-e312-80ac-a990-c877b5ca227f" dir="ltr"><td id="lSx=" class="">Físico</td><td id="[LL\" class="">Precio base + $5.000</td></tr><tr id="4145b3c4-e312-8084-93f2-cc096dfd5b55" dir="ltr"><td id="lSx=" class="">Digital</td><td id="[LL\" class="">Precio base con 10 % de descuento</td></tr></tbody></table><p id="4145b3c4-e312-8090-ab55-f4846256fa25" class="" dir="auto">También validaremos que el código y el nombre sean obligatorios y que el precio base sea mayor que cero.</p><h2 id="4145b3c4-e312-803d-b6f0-fbb7a7736d7b" class="" dir="auto">2. Paso a paso desde cero</h2><h3 id="4145b3c4-e312-804d-a2c8-e8cd2e50ade7" class="" dir="auto">Paso 1. Preparar MySQL</h3><p id="4145b3c4-e312-801e-9ddb-f0a9178b94a7" class="" dir="auto">Con XAMPP, inicia MySQL y Apache, después entra a <code>http://localhost/phpmyadmin</code>. Con Laragon, inicia el servidor y abre su administrador de base de datos.</p><p id="4145b3c4-e312-80e3-85a3-c7454cc9d48d" class="" dir="auto">Selecciona la pestaña SQL y ejecuta este código, que también está incluido en <code>puertogames.sql</code>.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" integrity="sha512-sijCOJblSCXYYmXdwvqV0tak8QJW5iy2yLB1wAbbLc3OOIueqymizRFWUS/mwKctnzPKpNdPJV3aK1zlDMJmXQ==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="4145b3c4-e312-8041-a927-c2737bc4450d" class="code code-wrap" data-notion-code-syntax="sql"><code class="language-sql" style="white-space:pre-wrap;word-break:break-all">-- Crea la base de datos si no existe.
+CREATE DATABASE IF NOT EXISTS puertogames
+CHARACTER SET utf8mb4;
+
+-- Selecciona la base de datos.
+USE puertogames;
+
+-- Crea la tabla de videojuegos.
+CREATE TABLE IF NOT EXISTS videojuegos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(20) NOT NULL UNIQUE,
+    nombre VARCHAR(100) NOT NULL,
+    precio_base INT NOT NULL,
+    tipo ENUM(&#x27;FISICO&#x27;, &#x27;DIGITAL&#x27;) NOT NULL,
+    CHECK (precio_base &gt; 0)
+);
+
+-- Consulta los registros almacenados.
+SELECT * FROM videojuegos;</code></pre><p id="4145b3c4-e312-8051-b3b5-fa889972c84b" class="" dir="auto">La columna <code>id</code> identifica cada videojuego, <code>codigo</code> no permite duplicados y <code>tipo</code> solamente acepta <code>FISICO</code> o <code>DIGITAL</code>.</p><h3 id="4145b3c4-e312-80ac-a61f-cbdae1cc317d" class="" dir="auto">Paso 2. Crear el proyecto Maven</h3><p id="4145b3c4-e312-80b7-acd1-dde544c8e48c" class="" dir="auto">En IntelliJ IDEA:</p><ol type="1" id="4145b3c4-e312-80e3-9d46-e93748a17f45" class="numbered-list" start="1" dir="auto"><li>Selecciona New Project → Java.</li></ol><ol type="1" id="4145b3c4-e312-80fe-9680-fb43767bd3b4" class="numbered-list" start="2" dir="auto"><li>En Build System, selecciona Maven.</li></ol><ol type="1" id="4145b3c4-e312-8088-a7e8-fb180485f6c7" class="numbered-list" start="3" dir="auto"><li>En JDK, selecciona Java 21.</li></ol><ol type="1" id="4145b3c4-e312-8007-9def-e0604e5983be" class="numbered-list" start="4" dir="auto"><li>Ingresa el nombre <code>PuertoGames_JavaFX_MySQL_2Clases</code>.</li></ol><ol type="1" id="4145b3c4-e312-80b8-ae4f-c7063eb84177" class="numbered-list" start="5" dir="auto"><li>Crea el proyecto. Si IntelliJ genera <code>module-info.java</code>, elimínalo, porque utilizaremos una configuración sin módulos explícitos.</li></ol><p id="4145b3c4-e312-8073-be68-d18784f93a22" class="" dir="auto">También puedes omitir estos pasos y abrir directamente la carpeta extraída del ZIP mediante File → Open.</p><h3 id="4145b3c4-e312-807a-b035-f55f93482bc7" class="" dir="auto">Paso 3. Estructura del proyecto</h3><pre id="4145b3c4-e312-8070-bbc7-cb62ba2a3d98" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">PuertoGames_JavaFX_MySQL_2Clases/
+│
+├── pom.xml
+├── puertogames.sql
+├── LEEME.txt
+│
+└── src/main/
+    ├── java/cl/duoc/puertogames/
+    │   ├── App.java
+    │   ├── config/
+    │   │   └── Conexion.java
+    │   ├── model/
+    │   │   ├── Videojuego.java
+    │   │   ├── JuegoFisico.java
+    │   │   └── JuegoDigital.java
+    │   ├── dao/
+    │   │   └── VideojuegoMySQLDAO.java
+    │   └── controller/
+    │       └── JuegoController.java
+    │
+    └── resources/cl/duoc/puertogames/
+        └── main-view.fxml</code></pre><p id="4145b3c4-e312-80d0-b758-ceadfd7d93c2" class="" dir="auto">Cada archivo tiene una responsabilidad: <code>model</code> representa los videojuegos, <code>dao</code> accede a MySQL, <code>controller</code> responde a la interfaz y <code>config</code> centraliza la conexión.</p><h2 id="4145b3c4-e312-802e-a844-f2c492436ca7" class="" dir="auto">3. Configuración Maven — <code>pom.xml</code></h2><p id="4145b3c4-e312-8068-913e-cea1188b11a9" class="" dir="auto">Este archivo indica qué librerías necesita el proyecto y cómo ejecutarlo. Reemplaza el <code>pom.xml</code> generado por IntelliJ.</p><pre id="4145b3c4-e312-8024-9444-f4a581979bab" class="code code-wrap" data-notion-code-syntax="xml"><code class="language-xml" style="white-space:pre-wrap;word-break:break-all">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;cl.duoc&lt;/groupId&gt;
+    &lt;artifactId&gt;puertogames-mysql&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+
+    &lt;!-- Configuración de Java 21 --&gt;
+    &lt;properties&gt;
+        &lt;maven.compiler.release&gt;21&lt;/maven.compiler.release&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;!-- Componentes gráficos de JavaFX --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.openjfx&lt;/groupId&gt;
+            &lt;artifactId&gt;javafx-controls&lt;/artifactId&gt;
+            &lt;version&gt;21.0.6&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- Permite utilizar archivos FXML --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.openjfx&lt;/groupId&gt;
+            &lt;artifactId&gt;javafx-fxml&lt;/artifactId&gt;
+            &lt;version&gt;21.0.6&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- Conector JDBC para MySQL --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-j&lt;/artifactId&gt;
+            &lt;version&gt;8.4.0&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;!-- Plugin para compilar Java --&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;version&gt;3.13.0&lt;/version&gt;
+            &lt;/plugin&gt;
+
+            &lt;!-- Plugin para ejecutar JavaFX --&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.openjfx&lt;/groupId&gt;
+                &lt;artifactId&gt;javafx-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;0.0.8&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;mainClass&gt;cl.duoc.puertogames.App&lt;/mainClass&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;</code></pre><p id="4145b3c4-e312-809b-80eb-cb3bccaaa5c2" class="" dir="auto">Cuando IntelliJ muestre la opción Load Maven Changes, selecciónala. Maven descargará las dependencias.</p><h2 id="4145b3c4-e312-8061-8133-d0d1cae71b26" class="" dir="auto">4. Modelo: herencia y polimorfismo</h2><p id="4145b3c4-e312-8083-9386-d60b04b16d50" class="" dir="auto">Primero crearemos las clases que representan los videojuegos. Estos archivos no necesitan conocer JavaFX ni MySQL.</p><h3 id="4145b3c4-e312-8099-a695-d45a4e1c1526" class="" dir="auto">Archivo 1 — <code>Videojuego.java</code></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js" integrity="sha512-xKcnbsdT0KMoA4yrozkqZM1XJVTrPsjdQwvigxlAlxEDu8YDvC/jl+LfVqn0fY3Vs6m2y4a89JCHEIA/Z9zpmQ==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="4145b3c4-e312-80da-9b78-c155ea776d6d" class="code code-wrap" data-notion-code-syntax="java"><code class="language-java" style="white-space:pre-wrap;word-break:break-all">
+package cl.duoc.puertogames.model;
+
+// Clase padre abstracta: concentra los atributos comunes.
+public abstract class Videojuego {
+
+    // Identificador y precio base del videojuego.
+    private final int id, precioBase;
+
+    // Código y nombre del videojuego.
+    private final String codigo, nombre;
+
+    // Constructor utilizado por las clases hijas.
+    public Videojuego(int id, String codigo, String nombre, int precioBase) {
+
+        // Valida que el código y el nombre no estén vacíos.
+        if (codigo == null || codigo.isBlank() || nombre == null || nombre.isBlank()) {
+            throw new IllegalArgumentException(&quot;Código y nombre son obligatorios.&quot;);
+        }
+
+        // Valida que el precio base sea mayor que cero.
+        if (precioBase &lt;= 0) {
+            throw new IllegalArgumentException(&quot;El precio debe ser mayor que cero.&quot;);
+        }
+
+        // Guarda los valores recibidos en los atributos.
+        this.id = id;
+        this.codigo = codigo.trim();
+        this.nombre = nombre.trim();
+        this.precioBase = precioBase;
+    }
+
+    // Getters: permiten consultar los atributos privados.
+    public int getId() { return id; }
+    public String getCodigo() { return codigo; }
+    public String getNombre() { return nombre; }
+    public int getPrecioBase() { return precioBase; }
+
+    // Las clases hijas implementan estos métodos.
+    public abstract String getTipo();
+    public abstract int getPrecioFinal();
+
+    // Indica cómo se mostrará el videojuego en ListView.
+    @Override
+    public String toString() {
+        return codigo + &quot; - &quot; + nombre + &quot; - &quot; + getTipo() + &quot; - $&quot; + getPrecioFinal();
+    }
+}</code></pre><p id="4145b3c4-e312-80e6-a659-ec3c69aa46c1" class="" dir="auto">Para explicar: <code>Videojuego</code> es abstracta porque no queremos crear un videojuego genérico. Cada videojuego será físico o digital. Los atributos <code>private</code> están encapsulados y los getters permiten acceder a ellos.</p><p id="4145b3c4-e312-807d-a139-f00e60fb81fb" class="" dir="auto">El método <code>toString()</code> es importante: JavaFX lo utilizará automáticamente para mostrar los videojuegos dentro de <code>ListView</code>, evitando configurar columnas como en <code>TableView</code>.</p><h3 id="4145b3c4-e312-8061-8492-fd05c5fa536d" class="" dir="auto">Archivo 2 — <code>JuegoFisico.java</code></h3><pre id="4145b3c4-e312-80b5-9408-ddb09db7c9e7" class="code code-wrap" data-notion-code-syntax="java"><code class="language-java" style="white-space:pre-wrap;word-break:break-all">
+package cl.duoc.puertogames.model;
+
+// Hereda de la clase padre Videojuego.
+public class JuegoFisico extends Videojuego {
+
+    // Constructor que recibe los datos del videojuego.
+    public JuegoFisico(int id, String codigo, String nombre, int precio) {
+
+        // Envía los datos al constructor de la clase padre.
+        super(id, codigo, nombre, precio);
+    }
+
+    // Identifica el tipo del videojuego.
+    @Override
+    public String getTipo() {
+        return &quot;FISICO&quot;;
+    }
+
+    // Calcula el precio sumando $5.000 por distribución.
+    @Override
+    public int getPrecioFinal() {
+        return getPrecioBase() + 5000;
+    }
+}</code></pre><h3 id="4145b3c4-e312-800b-aee1-f4b1bc4097c4" class="" dir="auto">Archivo 3 — <code>JuegoDigital.java</code></h3><pre id="4145b3c4-e312-806e-a0b8-c48bc40903f5" class="code code-wrap" data-notion-code-syntax="java"><code class="language-java" style="white-space:pre-wrap;word-break:break-all">
+package cl.duoc.puertogames.model;
+
+// Hereda los atributos y métodos de Videojuego.
+public class JuegoDigital extends Videojuego {
+
+    // Constructor del videojuego digital.
+    public JuegoDigital(int id, String codigo, String nombre, int precio) {
+
+        // Llama al constructor de la clase padre.
+        super(id, codigo, nombre, precio);
+    }
+
+    // Devuelve el tipo del videojuego.
+    @Override
+    public String getTipo() {
+        return &quot;DIGITAL&quot;;
+    }
+
+    // Calcula el precio con un descuento del 10%.
+    @Override
+    public int getPrecioFinal() {
+        return Math.round(getPrecioBase() * 0.90f);
+    }
+}</code></pre><p id="4145b3c4-e312-80e1-8152-f16142d5650b" class="" dir="auto">Concepto para reforzar: ambas clases heredan de <code>Videojuego</code> y sobrescriben <code>getPrecioFinal()</code>, pero cada una aplica una regla de negocio distinta. Esto es polimorfismo.</p><h2 id="4145b3c4-e312-80ed-b93c-f2e3d1b51cf2" class="" dir="auto">5. Conexión a MySQL</h2><h3 id="4145b3c4-e312-80a8-9459-d6267ebc539b" class="" dir="auto">Archivo 4 — <code>Conexion.java</code></h3><p id="4145b3c4-e312-80d1-9d67-f402765f56a7" class="" dir="auto">Este archivo configura la comunicación con MySQL. No realiza operaciones CRUD.</p><pre id="4145b3c4-e312-80ff-b681-de274d04dae8" class="code code-wrap" data-notion-code-syntax="java"><code class="language-java" style="white-space:pre-wrap;word-break:break-all">
+package cl.duoc.puertogames.config;
+
+// Importamos las clases necesarias para conectarnos a MySQL.
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+// Centraliza la configuración de la base de datos.
+public class Conexion {
+
+    // Dirección del servidor y nombre de la base de datos.
+    private static final String URL =
+            &quot;jdbc:mysql://localhost:3306/puertogames?useSSL=false&quot;;
+
+    // Usuario con el que nos conectaremos a MySQL.
+    private static final String USUARIO = &quot;root&quot;;
+
+    // Contraseña del usuario. Vacía para este ejemplo local.
+    private static final String CLAVE = &quot;&quot;;
+
+    // Método que abre una conexión con la base de datos.
+    public static Connection abrir() throws SQLException {
+
+        // Intenta conectarse y devuelve una conexión abierta.
+        return DriverManager.getConnection(URL, USUARIO, CLAVE);
+    }
+}</code></pre><p id="4145b3c4-e312-8086-a7c7-cd46cae9456f" class="" dir="auto">Analogía para los alumnos: <code>Conexion.java</code> es la puerta de acceso a la cocina del restaurante. Abre la comunicación, mientras que el DAO actúa como el mesero que lleva y trae información.</p><p id="4145b3c4-e312-8064-81c2-e5d2e152d8fa" class="" dir="auto">Los valores <code>root</code> y contraseña vacía corresponden únicamente a una configuración local de ejemplo. Deben ajustarse si MySQL utiliza otras credenciales.</p><h2 id="4145b3c4-e312-8005-9994-dde4c3b812fb" class="" dir="auto">6. Capa DAO — Operaciones CRUD con MySQL</h2><h3 id="4145b3c4-e312-80c3-984a-d553c87695fc" class="" dir="auto">Archivo 5 — <code>VideojuegoMySQLDAO.java</code></h3><p id="4145b3c4-e312-8044-b4eb-e00744f56643" class="" dir="auto">Esta es la clase que más conviene profundizar en la primera sesión. Aquí los estudiantes aprenden cómo Java conversa con MySQL utilizando JDBC.</p><p id="4145b3c4-e312-80a2-8c1d-c8c7737ffff1" class="" dir="auto">En lugar de tener cuatro métodos distintos, trabajaremos con tres: <code>listar()</code>, <code>guardar()</code> y <code>eliminar()</code>.</p><pre id="4145b3c4-e312-80d2-ad14-dbdc8e6bf22d" class="code code-wrap" data-notion-code-syntax="java"><code class="language-java" style="white-space:pre-wrap;word-break:break-all">
+package cl.duoc.puertogames.dao;
+
+import cl.duoc.puertogames.config.Conexion;
+import cl.duoc.puertogames.model.*;
+import java.sql.*;
+import java.util.*;
+
+// DAO: concentra las consultas SQL del proyecto.
+public class VideojuegoMySQLDAO {
+
+    // READ: obtiene todos los registros de MySQL.
+    public List&lt;Videojuego&gt; listar() {
+
+        // Lista donde guardaremos los videojuegos encontrados.
+        List&lt;Videojuego&gt; juegos = new ArrayList&lt;&gt;();
+
+        // Abre la conexión y ejecuta una consulta SELECT.
+        // try-with-resources cierra los recursos automáticamente.
+        try (Connection cn = Conexion.abrir();
+        
+			       // PreparedStatement representa la instrucción SQL preparada.
+             PreparedStatement ps = cn.prepareStatement(&quot;SELECT * FROM videojuegos ORDER BY id&quot;);
+             
+             // ResultSet guarda el resultado para recorrer las filas obtenidas.
+             ResultSet rs = ps.executeQuery()) {
+
+            // Recorre los videojuegos encontrados, next=fila por fila.
+            while (rs.next()) {
+
+                // Obtiene los datos de las columnas MySQL.
+                int id = rs.getInt(&quot;id&quot;);
+                String codigo = rs.getString(&quot;codigo&quot;);
+                String nombre = rs.getString(&quot;nombre&quot;);
+                int precio = rs.getInt(&quot;precio_base&quot;);
+
+                // Comprueba si el videojuego es físico.
+                if (&quot;FISICO&quot;.equals(rs.getString(&quot;tipo&quot;))) {
+                
+
+                    // Crea un juego físico y lo agrega a la lista.
+                    juegos.add(new JuegoFisico(id, codigo, nombre, precio));
+                    
+
+                } else {
+
+                    // Si no es físico, crea un juego digital.
+                    juegos.add(new JuegoDigital(id, codigo, nombre, precio));
+                }
+            }
+
+        // Captura los errores relacionados con MySQL.
+        } catch (SQLException e) {
+            throw new RuntimeException(&quot;Error al listar: &quot; + e.getMessage(), e);
+        }
+
+        // Devuelve todos los videojuegos recuperados.
+        return juegos;
+    }
+    
+    
+    
+    
+
+    // CREATE / UPDATE: registra o modifica un videojuego.
+    public void guardar(Videojuego j) {
+
+        // Consulta SQL para agregar un nuevo videojuego.
+        String sql = &quot;INSERT INTO videojuegos(codigo,nombre,precio_base,tipo) VALUES(?,?,?,?)&quot;;
+
+        // Si el videojuego tiene ID, significa que queremos editarlo.
+        if (j.getId() != 0) {
+
+            // Consulta SQL para modificar el registro existente.
+            sql = &quot;UPDATE videojuegos SET codigo=?,nombre=?,precio_base=?,tipo=? WHERE id=?&quot;;
+        }
+
+        // Abre la conexión y prepara la consulta SQL.
+        try (Connection cn = Conexion.abrir();
+             PreparedStatement ps = cn.prepareStatement(sql)) {
+
+            // Reemplaza los signos ? con los datos del videojuego.
+            ps.setString(1, j.getCodigo());
+            ps.setString(2, j.getNombre());
+            ps.setInt(3, j.getPrecioBase());
+            ps.setString(4, j.getTipo());
+
+      // Si estamos editando, también enviamos su ID.
+     // Comprueba si el videojuego tiene un ID diferente de cero.
+    // Si tiene ID, significa que estamos actualizando un registro.
+            if (j.getId() != 0) {
+                ps.setInt(5, j.getId());
+            }
+
+            // Ejecuta INSERT o UPDATE en MySQL.
+            int filas = ps.executeUpdate();
+
+            // Comprueba que la operación afectó un registro.
+             // Comprueba si la consulta no afectó ningún registro.
+
+            if (filas == 0) {
+                throw new RuntimeException(&quot;No se encontró el videojuego.&quot;);
+            }
+            
+
+        // Captura errores de conexión o ejecución SQL.
+        } catch (SQLException e) {
+            throw new RuntimeException(&quot;Error al guardar: &quot; + e.getMessage(), e);
+        }
+    }
+    
+    
+
+    // DELETE: elimina el videojuego mediante su ID.
+    public void eliminar(int id) {
+
+        // Prepara la consulta DELETE.
+        try (Connection cn = Conexion.abrir();
+             PreparedStatement ps = cn.prepareStatement(
+                     &quot;DELETE FROM videojuegos WHERE id=?&quot;)) {
+
+            // Reemplaza el signo ? por el ID del videojuego.
+             // Asigna el ID recibido al primer signo ?.
+            // Por ejemplo, si id = 3, buscamos eliminar el registro 3.
+            // Asigna el ID al primer signo ?.
+            ps.setInt(1, id);
+            
+
+             // Ejecuta la instrucción DELETE en MySQL.
+            // Devuelve cuántas filas fueron eliminadas.
+            int filas = ps.executeUpdate();
+
+            // Comprueba no s eliminó ningún registro.
+            if (filas == 0) {
+                throw new RuntimeException(&quot;No se encontró el videojuego.&quot;);
+            }
+
+        // Captura errores relacionados con MySQL.
+        } catch (SQLException e) {
+            throw new RuntimeException(&quot;Error al eliminar: &quot; + e.getMessage(), e);
+        }
+    }
+}</code></pre><h3 id="4145b3c4-e312-801e-8a0c-f7969bd288e9" class="" dir="auto">¿Qué deben comprender los estudiantes sobre este DAO?</h3><p id="4145b3c4-e312-8054-9093-ebc87789d0a8" class="" dir="auto">El método <code>listar()</code> ejecuta <code>SELECT</code>, recorre las filas mediante <code>ResultSet</code> y transforma cada fila en un objeto Java.</p><p id="4145b3c4-e312-80f6-bed8-c8399aea08f3" class="" dir="auto">El método <code>guardar()</code> toma una decisión sencilla:</p><pre id="4145b3c4-e312-8014-8739-db3d1fa8f8e3" class="code code-wrap" data-notion-code-syntax="java"><code class="language-java" style="white-space:pre-wrap;word-break:break-all">if (j.getId() != 0) {
+    // UPDATE: el videojuego ya existe.
+} else {
+    // INSERT: es un videojuego nuevo.
+}</code></pre><p id="4145b3c4-e312-8056-b791-e0f9ce3a8ae2" class="" dir="auto">Y <code>eliminar()</code> necesita únicamente el ID para saber qué registro debe borrar.</p><p id="4145b3c4-e312-80b2-ac63-c7b2859ede24" class="" dir="auto">Podemos explicar <code>PreparedStatement</code> como una plantilla SQL que tiene espacios reservados mediante <code>?</code>. Después Java reemplaza esos espacios por los datos correctos usando <code>setString()</code> o <code>setInt()</code>.</p><h2 id="4145b3c4-e312-80db-ad3e-f923f2c8da6e" class="" dir="auto">7. Controller — Conectar el formulario con MySQL</h2><h3 id="4145b3c4-e312-8035-959d-c31733f70a1b" class="" dir="auto">Archivo 6 — <code>JuegoController.java</code></h3><p id="4145b3c4-e312-80cc-9002-d34276146567" class="" dir="auto">Este archivo maneja los botones y los campos del formulario. No escribe ninguna sentencia SQL, porque esa responsabilidad pertenece al DAO.</p><pre id="4145b3c4-e312-80c0-92fc-d991792aa4a5" class="code code-wrap" data-notion-code-syntax="java"><code class="language-java" style="white-space:pre-wrap;word-break:break-all">
+package cl.duoc.puertogames.controller;
+
+import cl.duoc.puertogames.dao.VideojuegoMySQLDAO;
+import cl.duoc.puertogames.model.*;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+
+// Controlador que recibe los eventos de la interfaz.
+public class JuegoController {
+
+    // ComboBox para elegir el tipo de videojuego.
+    @FXML private ComboBox&lt;String&gt; tipo;
+
+    // Campos para ingresar código, nombre y precio.
+    @FXML private TextField codigo, nombre, precio;
+
+    // Lista gráfica que mostrará los videojuegos.
+    @FXML private ListView&lt;Videojuego&gt; lista;
+
+    // Etiqueta que muestra mensajes al usuario.
+    @FXML private Label mensaje;
+
+    // Objeto DAO encargado de acceder a MySQL.
+    private final VideojuegoMySQLDAO dao = new VideojuegoMySQLDAO();
+
+    // Se ejecuta automáticamente cuando se abre la ventana.
+    @FXML private void initialize() {
+
+        // Agrega las opciones disponibles al ComboBox.
+        tipo.getItems().addAll(&quot;FISICO&quot;, &quot;DIGITAL&quot;);
+
+        // Carga los videojuegos desde MySQL.
+        try {
+            cargar();
+        } catch (RuntimeException e) {
+            mensaje.setText(e.getMessage());
+        }
+    }
+
+    // Consulta los videojuegos y actualiza la lista.
+    private void cargar() {
+
+        // Pide los datos al DAO y los coloca en ListView.
+        lista.getItems().setAll(dao.listar());
+    }
+
+    // Se ejecuta cuando seleccionamos un juego de la lista.
+    @FXML private void seleccionar() {
+
+        // Obtiene el videojuego seleccionado.
+        Videojuego j = lista.getSelectionModel().getSelectedItem();
+
+        // Si no existe selección, termina el método.
+        if (j == null) return;
+
+        // Copia los datos del videojuego al formulario.
+        tipo.setValue(j.getTipo());
+        codigo.setText(j.getCodigo());
+        nombre.setText(j.getNombre());
+
+        // Convierte el precio entero en texto.
+        precio.setText(String.valueOf(j.getPrecioBase()));
+    }
+
+    // Se ejecuta al presionar el botón Guardar.
+    @FXML private void guardar() {
+
+        // Captura errores al validar o guardar datos.
+        try {
+
+            // Comprueba que se haya seleccionado un tipo.
+            if (tipo.getValue() == null) {
+                mensaje.setText(&quot;Selecciona un tipo.&quot;);
+                return;
+            }
+
+            // Convierte el precio escrito a número entero.
+            int monto = Integer.parseInt(precio.getText().trim());
+
+            // Obtiene el videojuego seleccionado, si existe.
+            Videojuego seleccionado = lista.getSelectionModel().getSelectedItem();
+
+            // ID 0 indica que registraremos un videojuego nuevo.
+            int id = 0;
+
+            // Si existe un juego seleccionado, conservamos su ID.
+            if (seleccionado != null) {
+                id = seleccionado.getId();
+            }
+
+   // Instancia de Videojiuego Variable que puede contener cualquiera de las clases hijas.
+            Videojuego juego;
+
+            // Crea un videojuego físico cuando corresponde.
+            if (&quot;FISICO&quot;.equals(tipo.getValue())) {
+                juego = new JuegoFisico(id, codigo.getText(), nombre.getText(), monto);
+
+            // En caso contrario, crea un videojuego digital.
+            } else {
+                juego = new JuegoDigital(id, codigo.getText(), nombre.getText(), monto);
+            }
+
+            // Envía el objeto al DAO para insertarlo o actualizarlo.
+            dao.guardar(juego);
+
+            // Consulta MySQL nuevamente para actualizar la lista.
+            cargar();
+
+            // Limpia los campos del formulario.
+            limpiar();
+
+            // Informa que la operación terminó correctamente.
+            mensaje.setText(&quot;Videojuego guardado correctamente.&quot;);
+
+        // Captura precios que no son números enteros.
+        } catch (NumberFormatException e) {
+            mensaje.setText(&quot;El precio debe ser un número entero.&quot;);
+
+        // Captura errores del modelo o de MySQL.
+        } catch (RuntimeException e) {
+            mensaje.setText(&quot;Error: &quot; + e.getMessage());
+        }
+    }
+
+    // Se ejecuta al presionar el botón Eliminar.
+    @FXML private void eliminar() {
+
+        // Obtiene el videojuego seleccionado.
+        Videojuego j = lista.getSelectionModel().getSelectedItem();
+
+        // Comprueba que exista un videojuego seleccionado.
+        if (j == null) {
+            mensaje.setText(&quot;Selecciona un videojuego.&quot;);
+            return;
+        }
+
+        // Intenta eliminar el videojuego.
+        try {
+
+            // Solicita al DAO borrar el registro mediante su ID.
+            dao.eliminar(j.getId());
+
+            // Vuelve a consultar los videojuegos de MySQL.
+            cargar();
+
+            // Limpia la información del formulario.
+            limpiar();
+
+            // Confirma que el videojuego fue eliminado.
+            mensaje.setText(&quot;Videojuego eliminado.&quot;);
+
+        // Muestra los errores ocurridos durante la eliminación.
+        } catch (RuntimeException e) {
+            mensaje.setText(&quot;Error: &quot; + e.getMessage());
+        }
+    }
+
+    // Limpia los campos y elimina la selección actual.
+    @FXML private void limpiar() {
+
+        // Quita la selección del videojuego.
+        lista.getSelectionModel().clearSelection();
+
+        // Limpia el ComboBox.
+        tipo.setValue(null);
+
+        // Borra todos los campos de texto.
+        codigo.clear();
+        nombre.clear();
+        precio.clear();
+    }
+}</code></pre><h3 id="4145b3c4-e312-809f-8686-c5b907791774" class="" dir="auto">¿Por qué es más sencillo este Controller?</h3><p id="4145b3c4-e312-80c5-a20d-f6bbf0a12507" class="" dir="auto">Todo se concentra en cinco acciones:</p><table id="4145b3c4-e312-8038-8324-fe7fd6980dd8" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="4145b3c4-e312-80b2-9474-dc883c25694f" dir="ltr"><th id="SKck" class="simple-table-header-color simple-table-header">Método</th><th id="emRy" class="simple-table-header-color simple-table-header">Qué realiza</th></tr></thead><tbody><tr id="4145b3c4-e312-8037-a49a-d18756777f89" dir="ltr"><td id="SKck" class=""><code>initialize()</code></td><td id="emRy" class="">Prepara el ComboBox y carga los datos iniciales.</td></tr><tr id="4145b3c4-e312-80e5-a21c-cc26ec99f5a6" dir="ltr"><td id="SKck" class=""><code>cargar()</code></td><td id="emRy" class="">Consulta al DAO y actualiza <code>ListView</code>.</td></tr><tr id="4145b3c4-e312-809e-a65f-ec1fe4c8f063" dir="ltr"><td id="SKck" class=""><code>seleccionar()</code></td><td id="emRy" class="">Copia los datos seleccionados al formulario.</td></tr><tr id="4145b3c4-e312-80c1-b574-e3406717b2d3" dir="ltr"><td id="SKck" class=""><code>guardar()</code></td><td id="emRy" class="">Registra o actualiza un videojuego.</td></tr><tr id="4145b3c4-e312-800f-a9a5-fae3a4c2d088" dir="ltr"><td id="SKck" class=""><code>eliminar()</code></td><td id="emRy" class="">Elimina el registro seleccionado.</td></tr><tr id="4145b3c4-e312-80bc-9263-ecc9b2c85e7e" dir="ltr"><td id="SKck" class=""><code>limpiar()</code></td><td id="emRy" class="">Restablece el formulario.</td></tr></tbody></table><p id="4145b3c4-e312-800f-ae72-c98b54d0456f" class="" dir="auto">El único concepto que requiere especial atención es el ID: cuando no hay un videojuego seleccionado, utilizamos <code>0</code> para registrar; cuando existe uno seleccionado, utilizamos su ID real para actualizarlo.</p><h2 id="4145b3c4-e312-804e-ae5c-cbb5a8af608d" class="" dir="auto">8. Vista gráfica — <code>main-view.fxml</code></h2><h3 id="4145b3c4-e312-8022-beff-cd83c9c99aa3" class="" dir="auto">Archivo 7 — <code>main-view.fxml</code></h3><p id="4145b3c4-e312-802f-bfe0-f05586f713ed" class="" dir="auto">Guardaremos este archivo en:</p><p id="4145b3c4-e312-80ce-8662-e906b496371e" class="" dir="auto"><code>src/main/resources/cl/duoc/puertogames/main-view.fxml</code></p><p id="4145b3c4-e312-8007-93d7-e4b002ad8b9a" class="" dir="auto">Separamos el diseño de la lógica mediante FXML, como corresponde a la arquitectura MVC.</p><pre id="4145b3c4-e312-8074-aaca-f6bc906c7cfd" class="code code-wrap" data-notion-code-syntax="xml"><code class="language-xml" style="white-space:pre-wrap;word-break:break-all">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+
+&lt;?import javafx.geometry.Insets?&gt;
+&lt;?import javafx.scene.control.*?&gt;
+&lt;?import javafx.scene.layout.*?&gt;
+
+&lt;!-- Contenedor principal de la interfaz. --&gt;
+&lt;VBox spacing=&quot;12&quot;
+      xmlns=&quot;http://javafx.com/javafx/21&quot;
+      xmlns:fx=&quot;http://javafx.com/fxml/1&quot;
+      fx:controller=&quot;cl.duoc.puertogames.controller.JuegoController&quot;&gt;
+
+    &lt;!-- Agrega márgenes interiores a la ventana. --&gt;
+    &lt;padding&gt;
+        &lt;Insets top=&quot;20&quot; right=&quot;20&quot; bottom=&quot;20&quot; left=&quot;20&quot;/&gt;
+    &lt;/padding&gt;
+
+    &lt;!-- Título de la aplicación. --&gt;
+    &lt;Label text=&quot;PuertoGames - Gestión de videojuegos&quot;
+           style=&quot;-fx-font-size:20px;-fx-font-weight:bold;&quot;/&gt;
+
+    &lt;!-- Formulario para ingresar los datos. --&gt;
+    &lt;HBox spacing=&quot;10&quot;&gt;
+        &lt;ComboBox fx:id=&quot;tipo&quot; promptText=&quot;Tipo&quot; prefWidth=&quot;135&quot;/&gt;
+        &lt;TextField fx:id=&quot;codigo&quot; promptText=&quot;Código&quot; prefWidth=&quot;130&quot;/&gt;
+        &lt;TextField fx:id=&quot;nombre&quot; promptText=&quot;Nombre&quot; prefWidth=&quot;260&quot;/&gt;
+        &lt;TextField fx:id=&quot;precio&quot; promptText=&quot;Precio base&quot; prefWidth=&quot;150&quot;/&gt;
+    &lt;/HBox&gt;
+
+    &lt;!-- Botones vinculados a los métodos del Controller. --&gt;
+    &lt;HBox spacing=&quot;10&quot;&gt;
+        &lt;Button text=&quot;Guardar&quot; onAction=&quot;#guardar&quot;/&gt;
+        &lt;Button text=&quot;Eliminar&quot; onAction=&quot;#eliminar&quot;/&gt;
+        &lt;Button text=&quot;Limpiar&quot; onAction=&quot;#limpiar&quot;/&gt;
+    &lt;/HBox&gt;
+
+    &lt;!-- Muestra los videojuegos registrados en MySQL. --&gt;
+    &lt;!-- Al hacer clic, se cargan sus datos en el formulario. --&gt;
+    &lt;ListView fx:id=&quot;lista&quot;
+              onMouseClicked=&quot;#seleccionar&quot;
+              VBox.vgrow=&quot;ALWAYS&quot;/&gt;
+
+    &lt;!-- Mensajes de éxito o error. --&gt;
+    &lt;Label fx:id=&quot;mensaje&quot;
+           text=&quot;Bienvenido a PuertoGames&quot;
+           wrapText=&quot;true&quot;/&gt;
+
+&lt;/VBox&gt;</code></pre><p id="4145b3c4-e312-808b-a664-e0832bf365cf" class="" dir="auto">Para explicar a los estudiantes: <code>fx:id</code> relaciona cada componente gráfico con una variable del controlador, mientras que <code>onAction=&quot;#guardar&quot;</code> vincula el botón con el método <code>guardar()</code>.</p><h2 id="4145b3c4-e312-80ed-975e-cd622a0b59ce" class="" dir="auto">9. Clase principal — <code>App.java</code></h2><h3 id="4145b3c4-e312-80de-9301-f9e8cff1729d" class="" dir="auto">Archivo 8 — <code>App.java</code></h3><p id="4145b3c4-e312-80b7-8d1f-e59aeceac0f7" class="" dir="auto">Este archivo es el punto de entrada de JavaFX.</p><pre id="4145b3c4-e312-8084-a75e-e9397afd436e" class="code code-wrap" data-notion-code-syntax="java"><code class="language-java" style="white-space:pre-wrap;word-break:break-all">
+package cl.duoc.puertogames;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+// Clase principal que inicia la aplicación JavaFX.
+public class App extends Application {
+
+    // JavaFX ejecuta este método para crear la ventana.
+    @Override
+    public void start(Stage stage) throws Exception {
+
+        // Busca y carga el archivo FXML.
+        Parent vista = FXMLLoader.load(App.class.getResource(&quot;main-view.fxml&quot;));
+
+        // Crea la escena con dimensiones de 900 x 450 píxeles.
+        stage.setScene(new Scene(vista, 900, 450));
+
+        // Establece el título de la ventana.
+        stage.setTitle(&quot;PuertoGames - Catálogo de videojuegos&quot;);
+
+        // Muestra la ventana.
+        stage.show();
+    }
+
+    // Método principal que inicia JavaFX.
+    public static void main(String[] args) {
+        launch(args);
+    }
+}</code></pre><h2 id="4145b3c4-e312-8057-ae80-f3b3c238b968" class="" dir="auto">10. Ejecutar el proyecto en IntelliJ IDEA</h2><p id="4145b3c4-e312-8001-bc80-d6ad3618db4d" class="" dir="auto">Una vez creados los archivos:</p><ol type="1" id="4145b3c4-e312-8001-a3b7-e62a1ae49783" class="numbered-list" start="1" dir="auto"><li>Comprueba que el servidor MySQL esté iniciado.</li></ol><ol type="1" id="4145b3c4-e312-80f8-995b-ff1133e39fcf" class="numbered-list" start="2" dir="auto"><li>Verifica que la base de datos <code>puertogames</code> exista.</li></ol><ol type="1" id="4145b3c4-e312-80c1-8431-c011fd012f04" class="numbered-list" start="3" dir="auto"><li>Abre el proyecto en IntelliJ y selecciona JDK 21.</li></ol><ol type="1" id="4145b3c4-e312-805b-b2c6-f456e267f1c5" class="numbered-list" start="4" dir="auto"><li>Recarga las dependencias Maven si es necesario.</li></ol><ol type="1" id="4145b3c4-e312-808d-b02f-ddd1aa634cf5" class="numbered-list" start="5" dir="auto"><li>Abre el panel lateral Maven → Plugins → javafx → javafx:run.</li></ol><p id="4145b3c4-e312-8012-b0d0-cb6a28eacffc" class="" dir="auto">También puedes ejecutar desde la terminal ubicada en la carpeta donde está el <code>pom.xml</code>:</p><pre id="4145b3c4-e312-8070-8fdf-ddb872c46b15" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">mvn clean javafx:run</code></pre><p id="4145b3c4-e312-8051-8eae-f32e3e32a396" class="" dir="auto">La primera ejecución requiere conexión a Internet para descargar las dependencias Maven que no estén almacenadas en tu equipo.</p><h2 id="4145b3c4-e312-802b-b547-d2f6b0af0418" class="" dir="auto">11. Prueba completa del CRUD</h2><p id="4145b3c4-e312-8033-a36b-d16ca47e797f" class="" dir="auto">Utilizaremos estos dos videojuegos para comprobar todas las funcionalidades.</p><p id="4145b3c4-e312-8035-b72c-d5850c54f4f4" class="" dir="auto">0 de 5</p><table id="4145b3c4-e312-8022-a454-df2a16777b0a" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="4145b3c4-e312-8059-9086-c77b4d55f452" dir="ltr"><th id="@HaR" class="simple-table-header-color simple-table-header">Campo</th><th id=";eNn" class="simple-table-header-color simple-table-header">Videojuego 1</th><th id="|_zT" class="simple-table-header-color simple-table-header">Videojuego 2</th></tr></thead><tbody><tr id="4145b3c4-e312-80b3-ac37-d6dfd0b0309e" dir="ltr"><td id="@HaR" class="">Código</td><td id=";eNn" class="">PG001</td><td id="|_zT" class="">PG002</td></tr><tr id="4145b3c4-e312-808d-a7bf-c5cd4b3d7442" dir="ltr"><td id="@HaR" class="">Nombre</td><td id=";eNn" class="">Minecraft</td><td id="|_zT" class="">Hollow Knight</td></tr><tr id="4145b3c4-e312-8063-b418-c8cf30c51611" dir="ltr"><td id="@HaR" class="">Tipo</td><td id=";eNn" class="">FISICO</td><td id="|_zT" class="">DIGITAL</td></tr><tr id="4145b3c4-e312-8047-9ea8-f73f721599b7" dir="ltr"><td id="@HaR" class="">Precio base</td><td id=";eNn" class="">$20.000</td><td id="|_zT" class="">$10.000</td></tr><tr id="4145b3c4-e312-80de-90ca-f9e603a2fc5f" dir="ltr"><td id="@HaR" class="">Precio final</td><td id=";eNn" class="">$25.000</td><td id="|_zT" class="">$9.000</td></tr></tbody></table><pre id="4145b3c4-e312-8069-b525-e139b9746248" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">SELECT * FROM puertogames.videojuegos;</code></pre><h2 id="4145b3c4-e312-805d-ab13-e6b0df585fdd" class="" dir="auto">12. Distribución recomendada de las dos clases</h2><table id="4145b3c4-e312-80cc-827c-e07bac0db3b4" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="4145b3c4-e312-804f-9f6f-db14544edc1a" dir="ltr"><th id="PhTI" class="simple-table-header-color simple-table-header">Tiempo</th><th id="OXGW" class="simple-table-header-color simple-table-header">Clase 1 — JDBC y DAO</th><th id="becW" class="simple-table-header-color simple-table-header">Clase 2 — CRUD</th></tr></thead><tbody><tr id="4145b3c4-e312-8061-afd4-ec50a613ea71" dir="ltr"><td id="PhTI" class="">0–10 min</td><td id="OXGW" class="">Problema, arquitectura y conexión</td><td id="becW" class="">Repaso del DAO y Controller</td></tr><tr id="4145b3c4-e312-802b-b9f3-c06cc3825594" dir="ltr"><td id="PhTI" class="">10–20 min</td><td id="OXGW" class="">Modelo y método <code>listar()</code></td><td id="becW" class="">Selección y modificación</td></tr><tr id="4145b3c4-e312-8065-9af3-e4a60a1fee14" dir="ltr"><td id="PhTI" class="">20–30 min</td><td id="OXGW" class="">JavaFX y <code>ListView</code></td><td id="becW" class="">Implementar <code>DELETE</code></td></tr><tr id="4145b3c4-e312-80e3-b122-c04d99411637" dir="ltr"><td id="PhTI" class="">30–40 min</td><td id="OXGW" class="">Registrar y comprobar <code>INSERT</code></td><td id="becW" class="">Pruebas completas y persistencia</td></tr></tbody></table><p id="4145b3c4-e312-8098-8fff-f7adaa05a472" class="" dir="auto">Para que cada bloque realmente alcance, recomiendo entregar el ZIP como proyecto base y concentrar la codificación en los métodos correspondientes a cada clase, en lugar de hacer que los alumnos escriban todos los archivos de configuración desde cero durante los 80 minutos.</p><h3 id="4145b3c4-e312-8015-ba65-fd9186632f6b" class="" dir="auto">Verificación técnica realizada</h3><p id="4145b3c4-e312-80aa-82d0-dca0a57362d4" class="" dir="auto">Se comprobó que los archivos <code>pom.xml</code> y FXML están bien formados, que las clases de modelo, conexión y DAO compilan con JDK 21, y que las reglas de precio y validación funcionan en pruebas Java. También se verificó la estructura sintáctica del Controller con sustitutos de las API de JavaFX.</p><p id="4145b3c4-e312-8066-8686-ce4f6b0a8739" class="" dir="auto">No fue posible ejecutar Maven, abrir una ventana JavaFX real ni conectar a un servidor MySQL en este entorno. Por tanto, el funcionamiento integral aún requiere probarse en IntelliJ con MySQL iniciado.</p><h2 id="4145b3c4-e312-805b-a1b9-c60f209f5c5d" class="" dir="auto">Descargar proyecto completo</h2><p id="4145b3c4-e312-8001-9a9d-fd42935fa486" class="" dir="auto">PuertoGames — JavaFX + MySQL</p><p id="4145b3c4-e312-8097-be18-cc4ca36b0398" class="" dir="auto">Descargar ZIP completo</p><p id="4145b3c4-e312-8045-9d98-c2b399b6e251" class="" dir="auto">Incluye 8 archivos Java, FXML, pom.xml, SQL y LEEME.txt.</p><p id="4145b3c4-e312-80fa-aa3e-d958e135ce93" class="" dir="auto">C</p><figure id="4145b3c4-e312-8022-93dd-fd1254699d50" dir="ltr"><div class="source"><a href="Clase%20completa%20PuertoGames%20con%20JavaFX,%20Maven%20y%20MyS/PuertoGames_JavaFX_MySQL_2Clases.zip" data-notion-file="Clase%20completa%20PuertoGames%20con%20JavaFX,%20Maven%20y%20MyS/PuertoGames_JavaFX_MySQL_2Clases.zip" data-notion-file-alias="PuertoGames_JavaFX_MySQL_2Clases.zip">PuertoGames_JavaFX_MySQL_2Clases.zip</a></div></figure><hr id="4145b3c4-e312-80fa-9eb5-d0f3a68781bf" dir="auto"/><hr id="4145b3c4-e312-8045-81ab-c9abdba054a0" dir="auto"/><hr id="4145b3c4-e312-807a-86e6-cf2b13473deb" dir="auto"/><p id="4145b3c4-e312-808a-b0c9-c1af2161af21" class="" dir="auto">-</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
